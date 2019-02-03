@@ -71,39 +71,28 @@ export default class PokemonDisplay extends Component<{}> {
       const pokemon = this.state.pokemon;
       return (
         <SafeAreaView style = {{flex: 1}}>
-          <View>
-            <View style={{
-              height: 80, backgroundColor: 'white',
-              borderBottomWidth: 1,
-              borderBottomColor: '#dddddd'
-              }}> 
-              <Text >
-                Hi
-              </Text>
+          <StatusBar backgroundColor="red" />
+            <View style={ styles.topArea }> 
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.pokeName}> {'#' + pokemon.id + ' '} </Text>
+                <CapitalizedText style={styles.pokeName}>
+                  {pokemon.name}
+                </CapitalizedText>
+              </View>
+              
+              <Image
+                style={styles.pokeIcon}
+                source={{ uri: pokemon.sprite }}
+              />
             </View>
-          </View>
 
           <View style={styles.container}>
 
-            <StatusBar backgroundColor="red" />
-
-            <Text> {'#' + pokemon.id + ' '} </Text>
-            <CapitalizedText style={styles.pokeName}>
-              {pokemon.name}
-            </CapitalizedText>
-
-            <Image
-              style={styles.pokeIcon}
-              source={{ uri: pokemon.sprite }}
-            />
-
-
-
-            {/* <Button style={styles.button}
+            <Button style={styles.button}
             color="red"
             title="Next Pokémon"
             onPress={this.nextPokemon}
-          /> */}
+          />
 
           </View>
         </SafeAreaView>
@@ -113,11 +102,20 @@ export default class PokemonDisplay extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  topArea: {
+    height: 200, 
+    borderBottomWidth: 1,
+    borderBottomColor: '#dddddd',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#4C495E',
+  },
+  container: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   indicator: {
     flex: 1,
@@ -131,13 +129,13 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   pokeName: {
-    fontSize: 30,
+    fontSize: 25,
     color: "#FFF",
     textAlign: 'center',
-    margin: 15,
+    margin: 10,
   },
   pokeIcon: {
     width: 200,
-    height: 200
+    height: 170
   }
 });

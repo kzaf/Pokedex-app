@@ -98,7 +98,7 @@ export default class PokemonList extends Component<{}> {
         <FlatList
           data={this.state.pokeList}
           renderItem={({ item }) =>
-            <ListItem
+            <ListItem 
               onPress={() => {
                 // Navigate to the PokemonDisplay route with params
                 this.props.navigation.navigate('PokemonDisplay', {
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4C495E',
   },
   separator: {
-    height: 2,
+    height: 3,
     backgroundColor: "#4C495E",
   },
   loadingText: {
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   item: {
     fontSize: 20,
     height: 30,
-    color: '#000000'
+    color: 'black'
   },
   button: {
     width: '100%',
