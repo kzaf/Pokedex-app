@@ -58,7 +58,6 @@ export default class PokemonDisplay extends Component<{}> {
   // }
 
   render() {
-
     if (this.state.isLoading) {
       return (
         <View style={styles.indicator}>
@@ -70,13 +69,18 @@ export default class PokemonDisplay extends Component<{}> {
     }
     else {
       const pokemon = this.state.pokemon;
-
       return (
         <SafeAreaView style = {{flex: 1}}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.container}>
-              Hi
-            </Text>
+          <View>
+            <View style={{
+              height: 80, backgroundColor: 'white',
+              borderBottomWidth: 1,
+              borderBottomColor: '#dddddd'
+              }}> 
+              <Text >
+                Hi
+              </Text>
+            </View>
           </View>
 
           <View style={styles.container}>
