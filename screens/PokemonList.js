@@ -16,8 +16,7 @@ export default class PokemonList extends Component<{}> {
     super(props);
     this.state = {
       isLoading: true,
-      pokeList: [],
-      pokemon: ''
+      pokeList: []
     }
   }
 
@@ -42,16 +41,6 @@ export default class PokemonList extends Component<{}> {
           isLoading: false,
           pokeList: response.results
         })
-        .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
-  }
-
-  pokemonSelected(id) {
-    fetch(`http://pokeapi.co/api/v2/pokemon/${id}/`)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ pokemon });
       })
       .catch(err => console.log(err));
   }
@@ -107,11 +96,10 @@ export default class PokemonList extends Component<{}> {
         data={this.state.pokeList}
         renderItem={({item}) =>
           <ListItem
-            style={{ backgroundColor: 'green'}}
             onPress={() => {
-              /* 1. Navigate to the PokemonDisplay route with params */
+              // Navigate to the PokemonDisplay route with params
               this.props.navigation.navigate('PokemonDisplay', {
-                item: item
+                pokemonsUrlWithDetails: item.url
               });
             }}
             chevronColor="black"

@@ -4,11 +4,12 @@ import {
   Button,
   Image,
   StyleSheet,
+  SafeAreaView,
   Text,
   View,
   StatusBar} from 'react-native';
 import CapitalizedText from '../components/CapitalizedText';
-
+import Pokemon from '../components/Pokemon';
 
 export default class PokemonDisplay extends Component<{}> {
 
@@ -16,20 +17,19 @@ export default class PokemonDisplay extends Component<{}> {
     super(props);
     this.state = {
       isLoading: true,
-      pokeDetails: '',
-      sprite:'https://cdn.bulbagarden.net/upload/9/98/Missingno_RB.png'
+      pokemon: {}
     }
   }
 
-  async getPokemonDetails(url) {
+  async componentDidMount(){
+    const { navigation } = this.props;
+    const pokemonDetails = navigation.getParam('pokemonsUrlWithDetails', 'NO-ID');
     try {
-      let response = await fetch(url);
+      let response = await fetch(pokemonDetails);
       let responseJson = await response.json();
-      console.log(responseJson.sprites.front_default)
       this.setState({
         isLoading: false,
-        sprite: responseJson.sprites.front_default,
-        pokeDetails: responseJson
+        pokemon: new Pokemon(responseJson),
       })
     } catch (error) {
       console.error(error);
@@ -50,39 +50,62 @@ export default class PokemonDisplay extends Component<{}> {
       },
   };
 
-  nextPokemon = () => {
-    this.setState({
-        number: this.state.number + 1
-    })
-    this.componentDidMount();
-  }
+  // nextPokemon = () => {
+  //   this.setState({
+  //       number: this.state.number + 1
+  //   })
+  //   this.componentDidMount();
+  // }
 
   render() {
-    const { navigation } = this.props;
-    const itemId = navigation.getParam('item', 'NO-ID');
-    this.getPokemonDetails(itemId.url);
-    
-    return (
-    <View style={styles.container}>
 
-      <StatusBar backgroundColor="red"/>
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.indicator}>
+          <Text style={styles.loadingText}>Loading Details</Text>
+          <ActivityIndicator />
+        </View>
 
-      <CapitalizedText style = {styles.pokeName}>
-        {itemId.name}
-      </CapitalizedText> 
+      )
+    }
+    else {
+      const pokemon = this.state.pokemon;
 
-      <Image
-          style={styles.pokeIcon}
-          source={{uri: this.state.sprite}}
-    />
+      return (
+        <SafeAreaView style = {{flex: 1}}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.container}>
+              Hi
+            </Text>
+          </View>
 
-      <Button style = {styles.button}
-          color = "red"
-          title="Next Pokémon"
-          onPress={this.nextPokemon}
-      />
-    </View>
-  );}
+          <View style={styles.container}>
+
+            <StatusBar backgroundColor="red" />
+
+            <Text> {'#' + pokemon.id + ' '} </Text>
+            <CapitalizedText style={styles.pokeName}>
+              {pokemon.name}
+            </CapitalizedText>
+
+            <Image
+              style={styles.pokeIcon}
+              source={{ uri: pokemon.sprite }}
+            />
+
+
+
+            {/* <Button style={styles.button}
+            color="red"
+            title="Next Pokémon"
+            onPress={this.nextPokemon}
+          /> */}
+
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -96,6 +119,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#4C495E',
+  },
+  loadingText: {
+    fontSize: 30,
+    color: "#FFF",
+    textAlign: 'center',
+    margin: 15,
   },
   pokeName: {
     fontSize: 30,
