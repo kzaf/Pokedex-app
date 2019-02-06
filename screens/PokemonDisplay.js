@@ -8,6 +8,7 @@ import {
   Text,
   View,
   StatusBar} from 'react-native';
+import { Container, Header, Content, Icon, Card, CardItem, Body, Accordion } from 'native-base';
 import CapitalizedText from '../components/CapitalizedText';
 import Pokemon from '../components/Pokemon';
 
@@ -50,12 +51,65 @@ export default class PokemonDisplay extends Component<{}> {
       },
   };
 
-  // nextPokemon = () => {
-  //   this.setState({
-  //       number: this.state.number + 1
-  //   })
-  //   this.componentDidMount();
-  // }
+  _renderHeader(item, expanded) {
+    return (
+      <View style={styles.renderHeaderItemStyle}>
+        <Text style={{ fontSize: 25, color: 'black'}}>
+          {" "}{item.title}
+        </Text>
+        {expanded
+          ? <Icon style={{ fontSize: 25 }} name="remove-circle" />
+          : <Icon style={{ fontSize: 25 }} name="add-circle" />}
+      </View>
+    );
+  }
+
+  _renderContent(item) {
+    if (item.title == "Stats"){
+      return (
+        <View style={styles.renderContentItemStyle}>
+
+          {item.content.map(function (stat, i) {
+            return <Text key={i}> 
+                    {stat.stat.name + ': ' + stat.base_stat.toString()}
+                   </Text>
+          })}
+
+        </View>
+      );
+    } else if (item.title == "Types"){
+      return (
+        <View
+          style={styles.renderContentItemStyle}>
+          <Text>
+            {item.content}
+          </Text>
+        </View>
+      );
+    }else{
+      return (
+        <View
+          style={ styles.renderContentItemStyle }>
+          {item.content.map(function (move, i) {
+            return <Text key={i}>
+              {move.move.name}
+            </Text>
+          })}
+        </View>
+      );
+    }
+    
+  }
+
+  _loadPokemonStats(pokemon) {
+    return(
+      pokemonInfoDataArray = [
+        { title: "Stats", content: pokemon.stats },
+        { title: "Types", content: "Lorem ipsum dolor sit amet" },
+        { title: "Moves", content: pokemon.moves }
+      ]
+    );
+  }
 
   render() {
     if (this.state.isLoading) {
@@ -72,13 +126,8 @@ export default class PokemonDisplay extends Component<{}> {
       return (
         <SafeAreaView style = {{flex: 1}}>
           <StatusBar backgroundColor="red" />
-            <View style={ styles.topArea }> 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.pokeName}> {'#' + pokemon.id + ' '} </Text>
-                <CapitalizedText style={styles.pokeName}>
-                  {pokemon.name}
-                </CapitalizedText>
-              </View>
+          
+            <View style={ styles.topArea }>
               
               <Image
                 style={styles.pokeIcon}
@@ -86,15 +135,32 @@ export default class PokemonDisplay extends Component<{}> {
               />
             </View>
 
-          <View style={styles.container}>
+            <Container style = {styles.container}>
 
-            <Button style={styles.button}
-            color="red"
-            title="Next Pokémon"
-            onPress={this.nextPokemon}
-          />
+              <Card>
+                <CardItem>
+                  <Body>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={styles.pokeName}> {'#' + pokemon.id} </Text>
+                      <CapitalizedText style={styles.pokeName}>
+                        {pokemon.name}
+                      </CapitalizedText>
+                    </View>
+                  </Body>
+                </CardItem>
+              </Card>
 
-          </View>
+              <Content padder style={{ backgroundColor: "white" }}>
+                <Accordion
+                  dataArray={this._loadPokemonStats(pokemon)}
+                  animation={true}
+                  expanded={true}
+                  renderHeader={this._renderHeader}
+                  renderContent={this._renderContent}
+                />
+              </Content>
+            </Container>
+
         </SafeAreaView>
       );
     }
@@ -103,7 +169,7 @@ export default class PokemonDisplay extends Component<{}> {
 
 const styles = StyleSheet.create({
   topArea: {
-    height: 200, 
+    height: 200,
     borderBottomWidth: 1,
     borderBottomColor: '#dddddd',
     flex: 1,
@@ -113,9 +179,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+    justifyContent: 'center'
   },
   indicator: {
     flex: 1,
@@ -130,12 +194,24 @@ const styles = StyleSheet.create({
   },
   pokeName: {
     fontSize: 25,
-    color: "#FFF",
+    color: "#000",
     textAlign: 'center',
     margin: 10,
   },
   pokeIcon: {
     width: 200,
     height: 170
+  },
+  renderHeaderItemStyle: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#777291"
+  },
+  renderContentItemStyle: {
+    backgroundColor: "#e5e5e5",
+    padding: 10,
+    fontStyle: "italic",
   }
 });
