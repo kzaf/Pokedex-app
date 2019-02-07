@@ -3,13 +3,13 @@ import {
    ActivityIndicator,
    Button,
    FlatList,
-   StyleSheet,
    SafeAreaView,
    Text,
    View,
    StatusBar} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import CapitalizedText from '../components/CapitalizedText';
+import styles from '../styles/pokemonListStyles';
 
 export default class PokemonList extends Component<{}> {
 
@@ -49,7 +49,7 @@ export default class PokemonList extends Component<{}> {
       .catch(err => console.log(err));
   }
 
-  SearchFilterFunction = text => {
+  _SearchFilterFunction = text => {
     const newData = this.arrayholder.filter(item => {
       const itemData = `${item.name.toUpperCase()}`; // item.name ? item.name.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -60,122 +60,72 @@ export default class PokemonList extends Component<{}> {
     });
   }
 
-  listSeparator = () => {
+  _listSeparator = () => {
     return ( <View style={styles.separator} /> );
   };
 
   render() {
+    if(this.state.isLoading) {
+      return(
 
-  const { search } = this.state.pokeList;
-
-  if(this.state.isLoading) {
-    return(
-
-    <View style = {styles.indicator}>
-        <Text style = {styles.loadingText}>Loading PokéList</Text>
-        <ActivityIndicator />
-    </View>
-
-    )
-  }
-  else{
-    return (
-    <SafeAreaView style = {{ flex: 1 }}>
-      <StatusBar backgroundColor="red" />
-      <View style={styles.searchArea}>
-        <SearchBar
-          round
-          inputStyle={{ fontSize: 18}}
-          inputContainerStyle={{ height: 50 }}
-          containerStyle={{ height: 70, borderWidth: 1}}
-          placeholder="Search Pokémon..."
-          onChangeText={text => this.SearchFilterFunction(text)}
-          // value={this.state.search}
-        />  
+      <View style = {styles.indicator}>
+          <Text style = {styles.loadingText}>Loading PokéList</Text>
+          <ActivityIndicator />
       </View>
 
-      <View style={styles.container}>
-        <FlatList
-          data={this.state.pokeList}
-          renderItem={({ item }) =>
-            <ListItem 
-              onPress={() => {
-                // Navigate to the PokemonDisplay route with params
-                this.props.navigation.navigate('PokemonDisplay', {
-                  pokemonsUrlWithDetails: item.url
-                });
-              }}
-              chevronColor="black"
-              chevron
-              title={
-                <CapitalizedText style={styles.item}>
-                  {item.name}
-                </CapitalizedText>
-              }
-            />
-          }
-          ItemSeparatorComponent={this.listSeparator}
-          keyExtractor={item => item.name}
-        />
+      )
+    }
+    else{
+      return (
+      <SafeAreaView style = {{ flex: 1 }}>
+        <StatusBar backgroundColor="red" />
+        <View style={styles.searchArea}>
+          <SearchBar
+            round
+            inputStyle={{ fontSize: 18}}
+            inputContainerStyle={{ height: 50 }}
+            containerStyle={{ height: 70, borderWidth: 1}}
+            placeholder="Search Pokémon..."
+            onChangeText={text => this._SearchFilterFunction(text)}
+          />  
+        </View>
 
-        <Text style={styles.amount}>
-          Total amount: {this.state.pokeList.length}
-        </Text>
+        <View style={styles.container}>
+          <FlatList
+            data={this.state.pokeList}
+            renderItem={({ item }) =>
+              <ListItem 
+                onPress={() => {
+                  // Navigate to the PokemonDisplay route with params
+                  this.props.navigation.navigate('PokemonDisplay', {
+                    pokemonsUrlWithDetails: item.url
+                  });
+                }}
+                chevronColor="black"
+                chevron
+                title={
+                  <CapitalizedText style={styles.item}>
+                    {item.name}
+                  </CapitalizedText>
+                }
+              />
+            }
+            ItemSeparatorComponent={this._listSeparator}
+            keyExtractor={item => item.name}
+          />
 
-        <Button buttonStyle={styles.button}
-          color="red"
-          title="Show first Pokémon"
-        />
+          <Text style={styles.amount}>
+            Total amount: {this.state.pokeList.length}
+          </Text>
 
-      </View>
-    </SafeAreaView>
-    
-  );}
+          <Button buttonStyle={styles.button}
+            color="red"
+            title="Show first Pokémon"
+          />
+
+        </View>
+      </SafeAreaView>
+      
+    );}
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#4C495E',
-  },
-  searchArea: {
-    height: 70, 
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd'
-  },
-  indicator: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#4C495E',
-  },
-  separator: {
-    height: 3,
-    backgroundColor: "#4C495E",
-  },
-  loadingText: {
-    fontSize: 30,
-    color: "#FFF",
-    textAlign: 'center',
-    margin: 15,
-  },
-  list:{
-    flexGrow: 1,
-  },
-  item: {
-    fontSize: 20,
-    height: 30,
-    color: 'black'
-  },
-  button: {
-    width: '100%',
-    margin: 10
-  },
-  amount: {
-    fontSize: 20,
-    color: "#FFF",
-    textAlign: 'center',
-    margin: 5,
-  }
-});

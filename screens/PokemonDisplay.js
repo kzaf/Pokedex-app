@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {
   ActivityIndicator,
-  Button,
   Image,
-  StyleSheet,
   SafeAreaView,
   Text,
   View,
   StatusBar} from 'react-native';
-import { Container, Header, Content, Icon, Card, CardItem, Body, Accordion } from 'native-base';
+import { Container, Content, Icon, Card, CardItem, Body, Accordion } from 'native-base';
 import CapitalizedText from '../components/CapitalizedText';
 import Pokemon from '../components/Pokemon';
+import styles from '../styles/pokemonDisplayStyles';
 
 export default class PokemonDisplay extends Component<{}> {
 
@@ -21,6 +20,20 @@ export default class PokemonDisplay extends Component<{}> {
       pokemon: {}
     }
   }
+
+  static navigationOptions = {
+    title: 'PokéDetails',
+    headerStyle: {
+      backgroundColor: "red",
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontSize: 24,
+      textAlign: 'center',
+      alignSelf: 'center',
+      width: "80%",
+    },
+  };
 
   async componentDidMount(){
     const { navigation } = this.props;
@@ -36,20 +49,6 @@ export default class PokemonDisplay extends Component<{}> {
       console.error(error);
     }
   }
-
-  static navigationOptions = {
-      title: 'PokéDetails',
-      headerStyle: {
-        backgroundColor: "red",
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontSize:24,
-        textAlign: 'center',
-        alignSelf:'center',
-        width: "80%",
-      },
-  };
 
   _renderHeader(item, expanded) {
     return (
@@ -132,7 +131,6 @@ export default class PokemonDisplay extends Component<{}> {
           <Text style={styles.loadingText}>Loading Details</Text>
           <ActivityIndicator />
         </View>
-
       )
     }
     else {
@@ -173,6 +171,7 @@ export default class PokemonDisplay extends Component<{}> {
                   renderContent={this._renderContent}
                 />
               </Content>
+
             </Container>
 
         </SafeAreaView>
@@ -180,52 +179,3 @@ export default class PokemonDisplay extends Component<{}> {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  topArea: {
-    height: 200,
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#4C495E',
-  },
-  container: {
-    flex: 2,
-    justifyContent: 'center'
-  },
-  indicator: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#4C495E',
-  },
-  loadingText: {
-    fontSize: 30,
-    color: "#FFF",
-    textAlign: 'center',
-    margin: 15,
-  },
-  pokeName: {
-    fontSize: 25,
-    color: "#000",
-    textAlign: 'center',
-    margin: 10,
-  },
-  pokeIcon: {
-    width: 200,
-    height: 170
-  },
-  renderHeaderItemStyle: {
-    flexDirection: "row",
-    padding: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#777291"
-  },
-  renderContentItemStyle: {
-    backgroundColor: "#e5e5e5",
-    padding: 10,
-    fontStyle: "italic",
-  }
-});
