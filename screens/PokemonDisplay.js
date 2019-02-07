@@ -81,9 +81,22 @@ export default class PokemonDisplay extends Component<{}> {
       return (
         <View
           style={styles.renderContentItemStyle}>
-          <Text>
-            {item.content}
-          </Text>
+          {item.content.map(function (type, i) {
+            return <Text key={i}>
+              {i+1 + ': ' + type.type.name}
+            </Text>
+          })}
+        </View>
+      );
+    } else if (item.title == "Abilities") {
+      return (
+        <View
+          style={styles.renderContentItemStyle}>
+          {item.content.map(function (ability, i) {
+            return <Text key={i}>
+              {i + 1 + ': ' + ability.ability.name}
+            </Text>
+          })}
         </View>
       );
     }else{
@@ -105,7 +118,8 @@ export default class PokemonDisplay extends Component<{}> {
     return(
       pokemonInfoDataArray = [
         { title: "Stats", content: pokemon.stats },
-        { title: "Types", content: "Lorem ipsum dolor sit amet" },
+        { title: "Types", content: pokemon.types },
+        { title: "Abilities", content: pokemon.abilities },
         { title: "Moves", content: pokemon.moves }
       ]
     );
@@ -131,7 +145,7 @@ export default class PokemonDisplay extends Component<{}> {
               
               <Image
                 style={styles.pokeIcon}
-                source={{ uri: pokemon.sprite }}
+              source={{ uri: pokemon.sprite }} // 'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front/'+pokemon+'.gif'
               />
             </View>
 
