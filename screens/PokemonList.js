@@ -51,7 +51,7 @@ export default class PokemonList extends Component<{}> {
 
   _SearchFilterFunction = text => {
     const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.name.toUpperCase()}`; // item.name ? item.name.toUpperCase() : ''.toUpperCase();
+      const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
@@ -87,27 +87,30 @@ export default class PokemonList extends Component<{}> {
             containerStyle={{ height: 70, borderWidth: 1}}
             placeholder="Search Pokémon..."
             onChangeText={text => this._SearchFilterFunction(text)}
-          />  
+          />
         </View>
 
         <View style={styles.container}>
           <FlatList
             data={this.state.pokeList}
             renderItem={({ item }) =>
-              <ListItem 
+              <ListItem
+                chevronColor="black"
+                chevron
+                title={
+                   <View style={{ flexDirection: 'row' }}>
+                      <Text style={styles.pokemonNumber}>{'#' + item.url.slice(34).replace("/", "") + ' '}</Text>
+                      <CapitalizedText style={styles.item}>
+                        {item.name}
+                      </CapitalizedText>
+                   </View>
+                }
                 onPress={() => {
                   // Navigate to the PokemonDisplay route with params
                   this.props.navigation.navigate('PokemonDisplay', {
                     pokemonsUrlWithDetails: item.url
                   });
                 }}
-                chevronColor="black"
-                chevron
-                title={
-                  <CapitalizedText style={styles.item}>
-                    {item.name}
-                  </CapitalizedText>
-                }
               />
             }
             ItemSeparatorComponent={this._listSeparator}
@@ -125,7 +128,7 @@ export default class PokemonList extends Component<{}> {
 
         </View>
       </SafeAreaView>
-      
+
     );}
   }
 }

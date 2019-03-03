@@ -1,5 +1,5 @@
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createAppContainer, DrawerNavigator } from 'react-navigation';
 import PokemonList from './screens/PokemonList'
 import PokemonDisplay from './screens/PokemonDisplay'
 

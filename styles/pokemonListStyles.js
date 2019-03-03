@@ -34,6 +34,11 @@ export default styles = StyleSheet.create({
         height: 30,
         color: 'black'
     },
+    pokemonNumber: {
+        fontSize: 20,
+        height: 30,
+        color: '#747476'
+    },
     button: {
         width: '100%',
         margin: 10

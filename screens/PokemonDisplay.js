@@ -5,7 +5,8 @@ import {
   SafeAreaView,
   Text,
   View,
-  StatusBar} from 'react-native';
+  StatusBar,
+  TouchableHighlight} from 'react-native';
 import { Container, Content, Icon, Card, CardItem, Body, Accordion } from 'native-base';
 import CapitalizedText from '../components/CapitalizedText';
 import Pokemon from '../components/Pokemon';
@@ -17,11 +18,12 @@ export default class PokemonDisplay extends Component<{}> {
     super(props);
     this.state = {
       isLoading: true,
+      animationToggle: true,
       pokemon: {}
     }
   }
-
   static navigationOptions = {
+
     title: 'PokéDetails',
     headerStyle: {
       backgroundColor: "red",
@@ -44,6 +46,9 @@ export default class PokemonDisplay extends Component<{}> {
       this.setState({
         isLoading: false,
         pokemon: new Pokemon(responseJson),
+      })
+      this.setState({
+        uri: this.state.pokemon.sprite
       })
     } catch (error) {
       console.error(error);
@@ -124,6 +129,12 @@ export default class PokemonDisplay extends Component<{}> {
     );
   }
 
+  _toggleImage(stateOfToggle) {
+    this.setState({
+      animationToggle: stateOfToggle
+    });
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -141,10 +152,16 @@ export default class PokemonDisplay extends Component<{}> {
           
             <View style={ styles.topArea }>
               
-              <Image
-                style={styles.pokeIcon}
-              source={{ uri: pokemon.sprite }} // 'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front/'+pokemon+'.gif'
-              />
+            <TouchableHighlight onPress={() => this._toggleImage(!this.state.animationToggle)}>
+                <Image
+                  style={styles.pokeIcon}
+                  source={{ uri: this.state.animationToggle ? 
+                            this.state.uri : 
+                            'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front/' + pokemon.name + '.gif'
+                        }} 
+            />
+              </TouchableHighlight>
+
             </View>
 
             <Container style = {styles.container}>
