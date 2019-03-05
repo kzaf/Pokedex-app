@@ -6,6 +6,7 @@ import {
    SafeAreaView,
    Text,
    View,
+   Image,
    StatusBar} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import CapitalizedText from '../components/CapitalizedText';
@@ -99,6 +100,7 @@ export default class PokemonList extends Component<{}> {
                 chevron
                 title={
                    <View style={{ flexDirection: 'row' }}>
+                    <Image style={styles.pokeIconCard} source={{ uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +item.url.slice(34).replace("/", "")+'.png' }} /> 
                       <Text style={styles.pokemonNumber}>{'#' + item.url.slice(34).replace("/", "") + ' '}</Text>
                       <CapitalizedText style={styles.item}>
                         {item.name}

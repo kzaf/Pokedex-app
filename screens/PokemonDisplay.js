@@ -149,19 +149,39 @@ export default class PokemonDisplay extends Component<{}> {
       return (
         <SafeAreaView style = {{flex: 1}}>
           <StatusBar backgroundColor="red" />
-          
+
             <View style={ styles.topArea }>
               
-            <TouchableHighlight onPress={() => this._toggleImage(!this.state.animationToggle)}>
+              <View> 
+              <Text style={styles.pokeNameNormal}> {'Normal'} </Text>
+              <TouchableHighlight onPress={() => this._toggleImage(!this.state.animationToggle)}>
                 <Image
                   style={styles.pokeIcon}
-                  source={{ uri: this.state.animationToggle ? 
-                            this.state.uri : 
-                            'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front/' + pokemon.name + '.gif'
-                        }} 
-            />
+                  source={{
+                    uri: this.state.animationToggle ?
+                      'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/front/' + pokemon.name + '.gif' :
+                      'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front/' + pokemon.name + '.gif'
+                  }} />
+              </TouchableHighlight>
+                
+              </View>
+
+              <View> 
+              <Text style={styles.pokeNameShiny}> {'Shiny'} </Text>
+              <TouchableHighlight onPress={() => this._toggleImage(!this.state.animationToggle)}>
+                <Image
+                  style={styles.pokeIcon}
+                  source={{
+                    uri: this.state.animationToggle ?
+                      'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/front-shiny/' + pokemon.name + '.gif' :
+                      'https://raw.githubusercontent.com/kzaf/poke-sprites/master/graphics/pokemon/ani-front-shiny/' + pokemon.name + '.gif'
+                  }} />
               </TouchableHighlight>
 
+              
+
+              </View>
+              
             </View>
 
             <Container style = {styles.container}>
@@ -170,6 +190,7 @@ export default class PokemonDisplay extends Component<{}> {
                 <CardItem>
                   <Body>
                     <View style={{ flexDirection: 'row' }}>
+                      <Image style={styles.pokeIconCard} source={{uri: pokemon.sprite}} />
                       <Text style={styles.pokeName}> {'#' + pokemon.id} </Text>
                       <CapitalizedText style={styles.pokeName}>
                         {pokemon.name}

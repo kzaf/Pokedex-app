@@ -9,6 +9,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4C495E',
+        flexDirection: 'row'
     },
     container: {
         flex: 2,
@@ -31,9 +32,26 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
     },
+    pokeNameNormal: {
+        fontSize: 23,
+        color: "#FFF",
+        textAlign: 'center',
+        margin: 10,
+    },
+    pokeNameShiny: {
+        fontSize: 23,
+        color: "#f5fdb5",
+        textAlign: 'center',
+        margin: 10,
+    },
     pokeIcon: {
+        resizeMode: 'stretch',
         width: 200,
-        height: 170
+        height: 200
+    },
+    pokeIconCard: {
+        width: 50,
+        height: 60
     },
     renderHeaderItemStyle: {
         flexDirection: "row",

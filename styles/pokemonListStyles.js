@@ -30,7 +30,7 @@ export default styles = StyleSheet.create({
         flexGrow: 1,
     },
     item: {
-        fontSize: 20,
+        fontSize: 25,
         height: 30,
         color: 'black'
     },
@@ -38,6 +38,10 @@ export default styles = StyleSheet.create({
         fontSize: 20,
         height: 30,
         color: '#747476'
+    },
+    pokeIconCard: {
+        width: 60,
+        height: 60
     },
     button: {
         width: '100%',
