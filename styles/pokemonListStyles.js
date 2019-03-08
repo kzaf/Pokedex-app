@@ -29,9 +29,8 @@ export default styles = StyleSheet.create({
     list: {
         flexGrow: 1,
     },
-    item: {
+    pokemonName: {
         fontSize: 25,
-        height: 30,
         color: 'black'
     },
     pokemonNumber: {
@@ -40,8 +39,8 @@ export default styles = StyleSheet.create({
         color: '#747476'
     },
     pokeIconCard: {
-        width: 60,
-        height: 60
+        width: 80,
+        height: 80
     },
     button: {
         width: '100%',

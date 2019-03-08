@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import {
    ActivityIndicator,
    Button,
+   Avatar,
    FlatList,
    SafeAreaView,
    Text,
    View,
    Image,
+   ScrollView,
    StatusBar} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import CapitalizedText from '../components/CapitalizedText';
 import styles from '../styles/pokemonListStyles';
 
-export default class PokemonList extends Component<{}> {
+export default class PokemonList extends Component {
 
   constructor(props){
     super(props);
@@ -77,6 +79,7 @@ export default class PokemonList extends Component<{}> {
       )
     }
     else{
+
       return (
       <SafeAreaView style = {{ flex: 1 }}>
         <StatusBar backgroundColor="red" />
@@ -100,12 +103,20 @@ export default class PokemonList extends Component<{}> {
                 chevron
                 title={
                    <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.pokeIconCard} source={{ uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +item.url.slice(34).replace("/", "")+'.png' }} /> 
                       <Text style={styles.pokemonNumber}>{'#' + item.url.slice(34).replace("/", "") + ' '}</Text>
-                      <CapitalizedText style={styles.item}>
-                        {item.name}
-                      </CapitalizedText>
                    </View>
+                }
+                leftAvatar={{ 
+                  rounded: true, 
+                  size: "large",
+                  source: { uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + item.url.slice(34).replace("/", "") + '.png' } 
+                }}
+                containerStyle={{ backgroundColor: '#fff' }}
+                avatarStyle={{ backgroundColor: '#fff' }}
+                subtitle={
+                   <CapitalizedText style={styles.pokemonName}>
+                      {item.name}
+                   </CapitalizedText>
                 }
                 onPress={() => {
                   // Navigate to the PokemonDisplay route with params
@@ -117,15 +128,6 @@ export default class PokemonList extends Component<{}> {
             }
             ItemSeparatorComponent={this._listSeparator}
             keyExtractor={item => item.name}
-          />
-
-          <Text style={styles.amount}>
-            Total amount: {this.state.pokeList.length}
-          </Text>
-
-          <Button buttonStyle={styles.button}
-            color="red"
-            title="Show first Pokémon"
           />
 
         </View>

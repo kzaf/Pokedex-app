@@ -12,7 +12,7 @@ import CapitalizedText from '../components/CapitalizedText';
 import Pokemon from '../components/Pokemon';
 import styles from '../styles/pokemonDisplayStyles';
 
-export default class PokemonDisplay extends Component<{}> {
+export default class PokemonDisplay extends Component {
     
     render() {
         <View>
