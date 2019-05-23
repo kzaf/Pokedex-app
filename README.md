@@ -7,7 +7,7 @@
 
 ## General info
 A pokedex app made with React Native,
-fetching data from https://pokeapi.co/
+fetching data from [PokeAPI](https://pokeapi.co/)
 
 ## Technologies
 Project is created with:
